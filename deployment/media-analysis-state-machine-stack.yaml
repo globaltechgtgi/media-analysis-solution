@@ -1074,23 +1074,12 @@ Resources:
                                     "StringEquals": "wave"
                                   }
                                 ],
-                                "Next": "ElasticSearch Params"
+                                "Next": "Processing Complete"
                               }],
                               "Default": "Not Valid Format"
                             },
-                            "ElasticSearch Params": {
-                              "Type": "Pass",
-                              "Result": {
-                                "service_name": "elasticsearch",
-                                "function_name": "index_doc"
-                              },
-                              "ResultPath": "$.lambda",
-                              "Next": "Index Metadata"
-                            },
-                            "Index Metadata": {
-                              "Type": "Task",
-                              "InputPath": "$",
-                              "Resource": "${lambdaArn}",
+                            "Processing Complete": {
+                              "Type": "Succeed",
                               "End": true
                             },
                             "Not Valid Format": {

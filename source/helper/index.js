@@ -18,7 +18,6 @@
 'use strict';
 
 console.log('Loading function');
-let eshelper = require('./lib/eshelper.js');
 let s3helper = require('./lib/s3helper.js');
 let metricsHelper = require('./lib/metricsHelper.js');
 let https = require('https');
@@ -64,25 +63,7 @@ exports.handler = function(event, context, callback) {
     }
 
     if (event.RequestType === 'Create') {
-        if (event.ResourceProperties.customAction === 'createIndex') {
-            let _eshelper = new eshelper();
-
-            _eshelper.createIndex(event.ResourceProperties.clusterUrl, event.ResourceProperties.es_index, event.ResourceProperties.es_version, function(err, data) {
-                if (err) {
-                    console.log(err);
-                    let responseData = {
-                      Error: 'Creating the index failed'
-                    };
-                }
-                else {
-                  console.log(data);
-                  responseStatus = 'SUCCESS';
-                }
-
-                sendResponse(event, callback, context.logStreamName, responseStatus, responseData);
-            });
-        }
-        else if (event.ResourceProperties.customAction === 'createUuid') {
+        if (event.ResourceProperties.customAction === 'createUuid') {
                 console.log('Generating UUID');
                 responseData = {uuid: uuidv4()};
                 responseStatus = 'SUCCESS';
